@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
         initView();
-        intitData();
+        initData();
     }
 
     private void initView() {
@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void intitData() {
+    private void initData() {
          userNameValue = getIntent().getStringExtra("userName");
 
         tvWelcome.setText("Xin chào " + userNameValue + "!");
