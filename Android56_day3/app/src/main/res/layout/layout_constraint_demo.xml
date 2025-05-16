@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glH1"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:id="@+id/v2"
+        android:layout_width="0dp"
+        android:background="#FF5722"
+        app:layout_constraintBottom_toTopOf="@id/v1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        />
+
+    <View
+        android:id="@+id/v1"
+        app:layout_constraintTop_toBottomOf="@id/glH1"
+        app:layout_constraintStart_toStartOf="@id/v2"
+        android:layout_width="100dp"
+        android:background="#4EB3FF"
+        android:layout_height="100dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
