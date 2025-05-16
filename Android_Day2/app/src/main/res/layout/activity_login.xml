@@ -34,4 +34,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register" />
+
+    <FrameLayout
+        android:id="@+id/flFirst"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+    <FrameLayout
+        android:id="@+id/flSecond"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
 </LinearLayout>

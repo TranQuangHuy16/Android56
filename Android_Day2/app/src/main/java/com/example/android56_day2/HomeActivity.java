@@ -1,9 +1,11 @@
 package com.example.android56_day2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +38,10 @@ public class HomeActivity extends AppCompatActivity {
             setResult(RESULT_OK, intent);
             finish();
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences("my_prefs", MODE_PRIVATE);
+        String name = sharedPreferences.getString(Constants.USER_NAME, "default");
+        Toast.makeText(HomeActivity.this, name, Toast.LENGTH_SHORT).show();
     }
 
     private void initData() {

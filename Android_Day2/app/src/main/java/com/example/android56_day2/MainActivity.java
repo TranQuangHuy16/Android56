@@ -1,6 +1,7 @@
 package com.example.android56_day2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import com.example.android56_day2.models.User;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +40,28 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
 
         initView();
+
+//        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARE_PREF_NAME, MODE_PRIVATE);
+//        String name = "Huy";
+//        sharedPreferences.edit().putString(Constants.USER_NAME, name).apply();
+
+        initFragments();
+    }
+
+    private void initFragments() {
+        // add SettingFragment
+        SettingFragment settingFragment = SettingFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.flFirst, settingFragment)
+                .commit();
+
+        // Replce SecondFragment
+        SecondFragment secondFragment = SecondFragment.newInstance("", "");
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flSecond, secondFragment)
+                .commit();
+
+//        getSupportFragmentManager().beginTransaction().remove(secondFragment).commit();
     }
 
     private void initView() {
