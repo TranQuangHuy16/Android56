@@ -38,12 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Log.d(TAG, "onCreate: ");
-
         initView();
-
-//        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARE_PREF_NAME, MODE_PRIVATE);
-//        String name = "Huy";
-//        sharedPreferences.edit().putString(Constants.USER_NAME, name).apply();
 
         initFragments();
     }
@@ -61,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.flSecond, secondFragment)
                 .commit();
 
-//        getSupportFragmentManager().beginTransaction().remove(secondFragment).commit();
     }
 
     private void initView() {
@@ -70,12 +64,19 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARE_PREF_NAME, MODE_PRIVATE);
+        String userNameRemember = sharedPreferences.getString(Constants.USER_NAME, null);
+        String passwordRemember = sharedPreferences.getString(Constants.PASS_WORD, null);
+        if (userNameRemember != null && passwordRemember != null) {
+            loginRemember(userNameRemember, passwordRemember);
+        }
         btnLogin.setOnClickListener(v -> {
             Log.d(TAG, "onClick: Login");
             String userNameValue = edtUserName.getText().toString();
             String passwordValue = edtPassword.getText().toString();
 
             login(userNameValue, passwordValue);
+
         });
 
         btnRegister.setOnClickListener(v -> {
@@ -86,6 +87,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void loginRemember(String userNameValue, String passwordValue) {
+        boolean isValid = false;
+        if (userNameValue.equals(USER_DEFAULT) && passwordValue.equals(PASS_DEFAULT)) {
+            isValid = true;
+        } else if (users != null) {
+            for (User user : users) {
+                if (user.userName.equals(userNameValue) && user.password.equals(passwordValue)) {
+                    isValid = true;
+                    break;
+                }
+            }
+        }
+        if (isValid) {
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.putExtra("userName", userNameValue);
+            homeLauncherLogin.launch(intent);
+        }
+
+    }
 
     private void login(String userNameValue, String passwordValue) {
         boolean isValid = false;
@@ -103,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
         if (isValid) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             intent.putExtra("userName", userNameValue);
+            SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARE_PREF_NAME, MODE_PRIVATE);
+            sharedPreferences.edit().putString(Constants.USER_NAME, userNameValue).apply();
+            sharedPreferences.edit().putString(Constants.PASS_WORD, passwordValue).apply();
             homeLauncherLogin.launch(intent);
         } else {
             Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();

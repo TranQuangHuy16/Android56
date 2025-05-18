@@ -31,17 +31,20 @@ public class HomeActivity extends AppCompatActivity {
     private void initView() {
         tvWelcome = findViewById(R.id.tvWelcome);
         btnLogout = findViewById(R.id.btnLogout);
+        SharedPreferences sharedPreferences = getSharedPreferences("my_prefs", MODE_PRIVATE);
+        String name = sharedPreferences.getString(Constants.USER_NAME, "default");
+        Toast.makeText(HomeActivity.this, name, Toast.LENGTH_SHORT).show();
 
         btnLogout.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.putExtra("name", userNameValue);
             setResult(RESULT_OK, intent);
+            sharedPreferences.edit().remove(Constants.USER_NAME).apply();
+            sharedPreferences.edit().remove(Constants.PASS_WORD).apply();
             finish();
         });
 
-        SharedPreferences sharedPreferences = getSharedPreferences("my_prefs", MODE_PRIVATE);
-        String name = sharedPreferences.getString(Constants.USER_NAME, "default");
-        Toast.makeText(HomeActivity.this, name, Toast.LENGTH_SHORT).show();
+
     }
 
     private void initData() {
