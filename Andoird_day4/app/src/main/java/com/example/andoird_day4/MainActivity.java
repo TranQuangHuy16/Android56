@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvDemo;
     private Button btnDemo;
     private ImageView imgDemo;
-
+    private CheckBox cbRememberPassword;
     private static final String IMAMAGE_DEMO = "https://static.wikia.nocookie.net/makeine/images/9/96/BasoriLN8.png/revision/latest?cb=20250404124936";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         tvDemo = findViewById(R.id.tvDemo);
         btnDemo = findViewById(R.id.btnDemo);
         imgDemo = findViewById(R.id.imgDemo);
-
+        cbRememberPassword = findViewById(R.id.cbRememberPassword);
         tvDemo.setOnClickListener(v -> {
             String textValue = edtDemo.getText().toString();
             Log.d(TAG, "onclick: " + textValue);
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         btnDemo.setOnClickListener(v -> {
             String textValue = edtDemo.getText().toString();
             Toast.makeText(this, textValue, Toast.LENGTH_SHORT).show();
+            boolean isCheckedRememberPassword = cbRememberPassword.isChecked();
+            Log.d(TAG, "onclick: " + isCheckedRememberPassword);
         });
 
         btnDemo.setOnLongClickListener(v -> {

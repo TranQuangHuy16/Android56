@@ -54,6 +54,36 @@
         android:layout_height="wrap_content"
         />
 
+    <CheckBox
+        android:id="@+id/cbRememberPassword"
+        android:layout_width="wrap_content"
+        android:fontFamily="@font/playwritedkloopet_extralight"
+        android:text="Remmber password"
+        android:button="@drawable/selector_cb_remember"
+        android:layout_height="wrap_content"
+        />
+
+    <RadioGroup
+        android:id="@+id/rgGender"
+        android:checkedButton="@id/rbMale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbMale"
+                android:text="Male"
+                android:fontFamily="@font/playwritedkloopet_extralight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/rbFemale"
+                android:text="Female"
+                android:fontFamily="@font/playwritedkloopet_extralight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RadioGroup>
+
     <Button
         android:id="@+id/btnDemo"
         android:text="Sign in"
@@ -64,4 +94,6 @@
         android:layout_height="wrap_content"
 
         />
+
+
 </LinearLayout>
