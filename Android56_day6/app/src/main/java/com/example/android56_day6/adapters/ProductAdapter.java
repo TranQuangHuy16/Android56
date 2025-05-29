@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.android56_day6.R;
+import com.example.android56_day6.interfaces.ProductClickListener;
 import com.example.android56_day6.models.Product;
 
 import java.util.ArrayList;
@@ -22,9 +23,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private static final String TAG = "ProductAdapter";
     private ArrayList<Product> mListProduct;
     private Context mContext;
+    private ProductClickListener mProductClickListener;
 
     public ProductAdapter(ArrayList<Product> mListProduct) {
         this.mListProduct = mListProduct;
+    }
+
+    public void setmProductClickListener(ProductClickListener mProductClickListener) {
+        this.mProductClickListener = mProductClickListener;
     }
 
     @NonNull
@@ -57,7 +63,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return mListProduct.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imgProduct;
         TextView tvProductName;
         ImageView imgProductOwner;
@@ -72,6 +78,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             tvProductOwner = itemView.findViewById(R.id.tvProductOwner);
             imgDetails = itemView.findViewById(R.id.imgDetails);
 
+            imgDetails.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.imgDetails) {
+                int position = getAdapterPosition();
+                if (mProductClickListener != null) {
+                    mProductClickListener.onItemClickListener(position, mListProduct.get(getAdapterPosition()));
+                }
+            }
         }
     }
 }
