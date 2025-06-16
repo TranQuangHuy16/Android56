@@ -12,17 +12,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.android26_day7.api.ProductApi;
+import com.example.android26_day7.interfaces.ProductViewImpl;
 import com.example.android26_day7.models.AllProductsResponse;
 import com.example.android26_day7.models.Product;
+import com.example.android26_day7.presenters.ProductPresenter;
 import com.example.android26_day7.retrofit.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProductViewImpl {
     private static final String TAG = "MainActivity";
-    private ProductApi productApi;
+    private ProductPresenter mProductPresenter;
     private EditText edtSearch;
     private Button btnSearch;
 
@@ -33,45 +35,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
-        
-        productApi = RetrofitClient.getProductApi();
 
-        productApi.getAllProducts().enqueue(new Callback<AllProductsResponse>() {
-            @Override
-            public void onResponse(Call<AllProductsResponse> call, Response<AllProductsResponse> response) {
-                if (response.isSuccessful()) {
-                    int code = response.code();
-                    if (code == 200) {
-                        Log.d(TAG, "onResponse: " + response.body().toString());
-                        Log.d(TAG, "onResponse: " + response.body().getProducts().size());
-                    }
-                }
-            }
+        mProductPresenter = new ProductPresenter(this);
 
-            @Override
-            public void onFailure(Call<AllProductsResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-            }
-        });
-
-        productApi.getProductById(5).enqueue(new Callback<Product>() {
-            @Override
-            public void onResponse(Call<Product> call, Response<Product> response) {
-                if (response.isSuccessful()) {
-                    int code = response.code();
-                    if (code == 200) {
-                        Log.d(TAG, "onResponse geProductById: " + response.body().toString());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Product> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-            }
-        });
-
-
+        mProductPresenter.getAllProducts();
     }
 
     private void initView() {
@@ -80,30 +47,39 @@ public class MainActivity extends AppCompatActivity {
 
         btnSearch.setOnClickListener(v -> {
             String keyword = edtSearch.getText().toString();
-            searchProduct(keyword);
+//            searchProduct(keyword);
         });
     }
 
-    private void searchProduct(String keyword) {
-        productApi.searchProduct(keyword).enqueue(new Callback<AllProductsResponse>() {
-            @Override
-            public void onResponse(Call<AllProductsResponse> call, Response<AllProductsResponse> response) {
-                if (response.isSuccessful()) {
-                    int code = response.code();
-                    if (code == 200) {
-                        Log.d(TAG, "onResponse searchProduct: " + response.body().toString());
-                        Log.d(TAG, "onResponse: searchProduct: " + response.body().getProducts().size());
 
-                    }
 
-                }
-            }
+    @Override
+    public void getAllProductSuccess(AllProductsResponse response) {
+        Log.d(TAG, "getAllProductSuccess: " + response.getProducts().size());
+    }
 
-            @Override
-            public void onFailure(Call<AllProductsResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+    @Override
+    public void getAllProductFailed(String code, String message) {
+        Log.d(TAG, "getAllProductFailed: " + message);
+    }
 
-            }
-        });
+    @Override
+    public void getProductByIdSuccess(Product product) {
+
+    }
+
+    @Override
+    public void getProductByIdFailed(String code, String message) {
+
+    }
+
+    @Override
+    public void searchProductSuccess(AllProductsResponse response) {
+
+    }
+
+    @Override
+    public void searchProductFailed(String code, String message) {
+
     }
 }
